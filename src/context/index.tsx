@@ -1,6 +1,7 @@
 import React, { FC, ComponentProps, JSX } from "react";
 import { Toaster } from "react-hot-toast";
 import { AuthContextProvider } from "../modules/auth/context";
+import { HomeContextProvider } from "@/modules/home/context";
 
 export const combineContext = (...components: FC[]): FC<any> => {
   const CombinedComponent = components.reduce(
@@ -41,5 +42,5 @@ export const combineContext = (...components: FC[]): FC<any> => {
   return CombinedComponent;
 };
 
-const providers = [AuthContextProvider] as any;
+const providers = [HomeContextProvider, AuthContextProvider] as any;
 export const AppContextProvider = combineContext(...providers);
