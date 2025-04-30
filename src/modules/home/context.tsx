@@ -1,3 +1,5 @@
+"use client";
+
 import { AxiosClient } from "@/components";
 import React, { createContext, useContext, useState } from "react";
 
@@ -15,6 +17,7 @@ export const useHomeState = () => {
   if (context === undefined) {
     throw new Error("useHomeState must be used within a App global Provider");
   }
+  return context;
 };
 
 interface IProps {

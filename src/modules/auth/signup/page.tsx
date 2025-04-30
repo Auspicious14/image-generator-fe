@@ -1,3 +1,4 @@
+"use client";
 import { Formik } from "formik";
 import { useAuth } from "../context";
 import { Button, TextInput } from "../../../components";
