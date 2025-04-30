@@ -1,6 +1,13 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap");
 
 body {
-  font-family: Inter, sans-serif;
+  font-family: Inter, Helvetica, sans-serif;
+}
+
+@theme {
+  --font-sans: "Inter", "sans-serif";
+  --bg-primary: #6366f1;
+  --bg-secondary: #4338ca;
+  --text-primary: #fff;
+  --text-secondary: #ccc;
 }

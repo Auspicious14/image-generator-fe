@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useHomeState } from "./context";
 import { Button } from "@/components";
 import { useRouter } from "next/navigation";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
 export const HomePage = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
+    <div className=" min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
@@ -39,16 +40,21 @@ export const HomePage = () => {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Describe the image you want to create..."
-              className="flex-1 p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="outline-none flex-1 p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-blue-500 focus:border-none"
             />
-            <Button
-              variant="primary"
+            <button
+              className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
+              // variant="primary"
               onClick={() => generateImage(prompt)}
               disabled={loading}
-              isLoading={loading}
+              // isLoading={loading}
             >
-              Generate
-            </Button>
+              {loading ? (
+                <ArrowPathIcon className="h-5 w-5 animate-spin" />
+              ) : (
+                "Generate"
+              )}
+            </button>
           </div>
 
           {image && (
@@ -76,9 +82,12 @@ export const HomePage = () => {
             Create an account to access your full generation history and manage
             your favorite prompts.
           </p>
-          <Button variant="primary" onClick={() => router.push("/login")}>
+          <button
+            className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
+            onClick={() => router.push("/login")}
+          >
             Signup to Continue
-          </Button>
+          </button>
         </div>
       </div>
     </div>
