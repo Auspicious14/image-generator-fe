@@ -31,7 +31,7 @@ export const HomeContextProvider: React.FC<IProps> = ({ children }) => {
   const generateImage = async (prompt: string) => {
     setLoading(true);
     try {
-      const response = await AxiosClient.post(`/image/generate`, { prompt });
+      const response = await AxiosClient.post(`/generate/image`, { prompt });
       const image = response?.data?.data;
       console.log({ image });
       if (image) {
