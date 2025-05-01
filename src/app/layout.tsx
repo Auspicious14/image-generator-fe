@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppContextProvider } from "@/context";
+import { Poppins, Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
   title: "Image Generator",
@@ -14,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans`}>
+      <body className={`${inter.variable} ${poppins.variable} font-sans`}>
         <AppContextProvider>{children}</AppContextProvider>
       </body>
     </html>

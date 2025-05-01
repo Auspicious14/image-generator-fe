@@ -42,19 +42,15 @@ export const HomePage = () => {
               placeholder="Describe the image you want to create..."
               className="outline-none flex-1 p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-blue-500 focus:border-none"
             />
-            <button
-              className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
-              // variant="primary"
+            <Button
+              // className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
+              variant="primary"
               onClick={() => generateImage(prompt)}
               disabled={loading}
-              // isLoading={loading}
+              isLoading={loading}
             >
-              {loading ? (
-                <ArrowPathIcon className="h-5 w-5 animate-spin" />
-              ) : (
-                "Generate"
-              )}
-            </button>
+              Generate
+            </Button>
           </div>
 
           {image && (
@@ -82,12 +78,14 @@ export const HomePage = () => {
             Create an account to access your full generation history and manage
             your favorite prompts.
           </p>
-          <button
-            className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
+
+          <Button
+            variant="primary"
+            // className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
             onClick={() => router.push("/login")}
           >
             Signup to Continue
-          </button>
+          </Button>
         </div>
       </div>
     </div>

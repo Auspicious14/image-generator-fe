@@ -65,7 +65,7 @@ export default function SignInPage() {
         <div className="mt-4 space-y-2 text-center">
           <Link
             href="/forgot-password"
-            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            className="text-sm text-primary dark:text-blue-400 hover:underline"
           >
             Forgot password?
           </Link>
@@ -73,7 +73,7 @@ export default function SignInPage() {
             Don't have an account?{" "}
             <Link
               href="/signup"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
+              className="text-primary dark:text-blue-400 hover:underline"
             >
               Sign Up
             </Link>
