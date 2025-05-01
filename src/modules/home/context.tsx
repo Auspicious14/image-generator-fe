@@ -2,10 +2,13 @@
 
 import { AxiosClient } from "@/components";
 import React, { createContext, useContext, useState } from "react";
+import { IHistory } from "./model";
 
 interface IHomeState {
   loading: boolean;
   image: string | null;
+  history: IHistory[];
+  getImages: () => Promise<any>;
   generateImage: (prompt: string) => Promise<any>;
 }
 
@@ -27,16 +30,35 @@ interface IProps {
 export const HomeContextProvider: React.FC<IProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
+  const [history, setHistory] = useState<IHistory[]>([]);
 
   const generateImage = async (prompt: string) => {
     setLoading(true);
     try {
       const response = await AxiosClient.post(`/generate/image`, { prompt });
-      const image = response?.data?.data;
-      console.log({ image });
-      if (image) {
-        setImage(image);
-        return image;
+      const data = response?.data?.data;
+      if (data) {
+        setImage(data?.imageUrl);
+        return data;
+      }
+      return null;
+    } catch (error: any) {
+      const err = error?.response?.data?.message || "Failed to generate image";
+      console.log({ err });
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getImages = async () => {
+    setLoading(true);
+    try {
+      const response = await AxiosClient.get(`/images`);
+      const data = response?.data?.data;
+      if (data) {
+        setHistory(data);
+        return data;
       }
       return null;
     } catch (error: any) {
@@ -48,7 +70,9 @@ export const HomeContextProvider: React.FC<IProps> = ({ children }) => {
     }
   };
   return (
-    <HomeContext.Provider value={{ loading, image, generateImage }}>
+    <HomeContext.Provider
+      value={{ loading, image, history, getImages, generateImage }}
+    >
       {children}
     </HomeContext.Provider>
   );
