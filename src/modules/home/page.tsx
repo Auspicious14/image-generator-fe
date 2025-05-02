@@ -111,7 +111,7 @@ export const HomePage = () => {
           <Button
             variant="primary"
             // className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/signin")}
           >
             Signup to Continue
           </Button>
