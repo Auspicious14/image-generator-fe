@@ -74,6 +74,7 @@ export const TextInput: FC<ITextInputProps> = ({
           <input
             {...field}
             {...props}
+            type={type}
             className={`block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-primary focus:ring-primary dark:focus:border-primary-400 dark:bg-gray-700 dark:text-gray-200${className}`}
             aria-describedby={helperText ? `${props.id}-helper` : undefined}
           />
