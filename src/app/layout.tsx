@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AppContextProvider } from "@/context";
 import { Poppins, Inter } from "next/font/google";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -22,7 +23,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable} font-sans`}>
+      <body
+        className={`${inter.variable} ${poppins.variable} font-sans bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800`}
+      >
+        <Image
+          src="/inkly logo.png"
+          alt="Image Generator Logo"
+          width={160}
+          height={40}
+          className="mx-auto mb-6 w-40 my-4 dark:invert"
+        />
         <AppContextProvider>{children}</AppContextProvider>
       </body>
     </html>
