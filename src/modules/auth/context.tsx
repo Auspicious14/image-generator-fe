@@ -42,9 +42,12 @@ export const AuthContextProvider = ({
     setError(null);
     try {
       const response = await AxiosClient.post(url, values);
-      if (response?.data) {
-        setUser(response.data);
-        toast.success("Success!");
+      if (response?.data?.success) {
+        if (type === "signin") {
+          localStorage.setItem("token", response.data?.data?.token);
+          setUser(response.data?.data);
+          toast.success("Success!");
+        }
         router.push(type === "signup" ? "/signin" : `/chat`);
       }
     } catch (err: any) {
