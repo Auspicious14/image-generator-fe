@@ -31,49 +31,47 @@ const HistoryPage = () => {
           Generation History
         </h1>
 
-        <div className="relative pb-12">
-          <div className="bg-white rounded-lg shadow-sm p-6 h-[calc(100vh-180px)] overflow-y-auto">
-            {history.map((item) => (
-              <div key={item._id} className="mb-6">
-                <div className="flex-1 bg-blue-100 p-4 mb-4 rounded-lg relative w-1/2 items-end">
-                  <span className="absolute top-3 left-0 w-4 h-4 bg-blue-100 transform rotate-45" />
-                  <p className="text-gray-700 ">{item.prompt}</p>
+        <div className="flex-1 overflow-y-auto p-4 space-y-6">
+          {history.map((item) => (
+            <div key={item._id} className="flex flex-col gap-2">
+              <div className="flex justify-end">
+                <div className="bg-blue-100 text-gray-800 px-4 py-3 rounded-2xl max-w-sm">
+                  {item.prompt}
                 </div>
-                <div className="w-48 h-32 relative">
+              </div>
+
+              <div className="flex justify-start">
+                <div className="bg-white p-1 rounded-2xl shadow-sm max-w-[200px]">
                   <Image
                     src={item.imageUrl}
                     alt="Generated"
-                    width={1024}
-                    height={1024}
-                    className="w-full h-full object-cover rounded-lg shadow-md"
+                    width={200}
+                    height={200}
+                    className="rounded-xl object-cover w-full h-auto"
                   />
-                  <span className="absolute top-3 right-0 w-4 h-4 bg-white transform rotate-45" />
                 </div>
               </div>
-            ))}
-          </div>
-
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
-            <div className="max-w-4xl mx-auto flex gap-4">
-              <input
-                type="text"
-                value={newPrompt}
-                onChange={(e) => setNewPrompt(e.target.value)}
-                placeholder="Type a new prompt..."
-                className="flex-1 p-4 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                onKeyPress={(e) => e.key === "Enter" && handleGenerate()}
-              />
-              <Button
-                variant="primary"
-                onClick={handleGenerate}
-                className="w-full rounded-full"
-                icon={PaperAirplaneIcon}
-                disabled={loading}
-                isLoading={loading}
-              >
-                <></>
-              </Button>
             </div>
+          ))}
+        </div>
+
+        <div className="bg-white border-t px-4 py-3">
+          <div className="max-w-3xl mx-auto flex items-center gap-3">
+            <input
+              type="text"
+              value={newPrompt}
+              onChange={(e) => setNewPrompt(e.target.value)}
+              placeholder="Type your prompt..."
+              onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
+              className="flex-1 rounded-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              onClick={handleGenerate}
+              disabled={loading}
+              className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <PaperAirplaneIcon className="w-5 h-5 rotate-90" />
+            </button>
           </div>
         </div>
       </div>

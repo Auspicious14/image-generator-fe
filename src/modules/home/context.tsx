@@ -39,6 +39,7 @@ export const HomeContextProvider: React.FC<IProps> = ({ children }) => {
       const data = response?.data?.data;
       if (data) {
         setImage(data?.imageUrl);
+        setHistory([...history, data]);
         return data;
       }
       return null;
