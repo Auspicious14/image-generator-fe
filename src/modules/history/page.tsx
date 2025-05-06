@@ -4,13 +4,16 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components";
 import { useRouter } from "next/navigation";
 import { useHomeState } from "../home/context";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownTrayIcon,
+  PaperAirplaneIcon,
+} from "@heroicons/react/24/outline";
 import Image from "next/image";
 
 const HistoryPage = () => {
   const router = useRouter();
   const [newPrompt, setNewPrompt] = useState("");
-  const { getImages, history, loading, generateImage, image } = useHomeState();
+  const { getImages, history, loading, generateImage } = useHomeState();
 
   useEffect(() => {
     getImages();
@@ -22,6 +25,22 @@ const HistoryPage = () => {
     if (res) {
       setNewPrompt("");
     }
+  };
+
+  const handleDownload = (image: string) => {
+    if (!image) return;
+    fetch(image)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `generated-image-${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      });
   };
 
   return (
@@ -40,7 +59,7 @@ const HistoryPage = () => {
                 </div>
               </div>
 
-              <div className="flex justify-start">
+              <div className="flex justify-start items-center gap-2">
                 <div className="bg-white p-1 rounded-2xl shadow-sm max-w-[200px]">
                   <Image
                     src={item.imageUrl}
@@ -50,6 +69,13 @@ const HistoryPage = () => {
                     className="rounded-xl object-cover w-full h-auto"
                   />
                 </div>
+                <button
+                  onClick={() => handleDownload(item.imageUrl)}
+                  className="text-blue-600 hover:text-blue-800"
+                  title="Download image"
+                >
+                  <ArrowDownTrayIcon className="w-5 h-5" />
+                </button>
               </div>
             </div>
           ))}
