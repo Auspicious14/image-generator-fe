@@ -34,20 +34,17 @@ const HistoryPage = () => {
         <div className="relative pb-12">
           <div className="bg-white rounded-lg shadow-sm p-6 h-[calc(100vh-180px)] overflow-y-auto">
             {history.map((item) => (
-              <div
-                key={item._id}
-                className="flex gap-6 mb-6 flex-row items-center justify-between"
-              >
-                <div className="flex-1 bg-blue-100 p-4 rounded-lg relative">
+              <div key={item._id} className="mb-6">
+                <div className="flex-1 bg-blue-100 p-4 mb-4 rounded-lg relative w-1/2 items-end">
                   <span className="absolute top-3 left-0 w-4 h-4 bg-blue-100 transform rotate-45" />
-                  <p className="text-gray-700 mb-2">{item.prompt}</p>
+                  <p className="text-gray-700 ">{item.prompt}</p>
                 </div>
                 <div className="w-48 h-32 relative">
                   <Image
                     src={item.imageUrl}
                     alt="Generated"
-                    width={100}
-                    height={100}
+                    width={1024}
+                    height={1024}
                     className="w-full h-full object-cover rounded-lg shadow-md"
                   />
                   <span className="absolute top-3 right-0 w-4 h-4 bg-white transform rotate-45" />

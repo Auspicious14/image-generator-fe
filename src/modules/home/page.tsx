@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import { useHomeState } from "./context";
 import { Button } from "@/components";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../auth/context";
 
 export const HomePage = () => {
   const router = useRouter();
   const [prompt, setPrompt] = useState("");
   const { loading, image, generateImage } = useHomeState();
+  const { authStatus } = useAuth();
 
   const handleGenerate = () => {
     if (!prompt.trim()) return;
@@ -62,15 +64,25 @@ export const HomePage = () => {
                 loading ? "animate-pulse" : ""
               }`}
             />
-            <Button
-              // className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
-              variant="primary"
-              onClick={() => handleGenerate()}
-              disabled={loading}
-              isLoading={loading}
-            >
-              Generate
-            </Button>
+            {authStatus === "authenticated" ? (
+              <Button
+                // className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
+                variant="primary"
+                onClick={() => handleGenerate()}
+                disabled={loading}
+                isLoading={loading}
+              >
+                Generate
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                // className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
+                onClick={() => router.push("/signin")}
+              >
+                Signin to Continue
+              </Button>
+            )}
           </div>
 
           {loading ? (
@@ -113,7 +125,7 @@ export const HomePage = () => {
             // className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors"
             onClick={() => router.push("/signin")}
           >
-            Signup to Continue
+            Signin to Continue
           </Button>
         </div>
       </div>

@@ -1,14 +1,22 @@
 "use client";
-import React, { createContext, useCallback, useContext, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { FormikHelpers } from "formik";
 import { AxiosClient } from "../../components";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { cookies } from "next/headers";
 
 export interface AuthContextType {
   user: any;
   isLoading: boolean;
   error: string | null;
+  authStatus: string | null;
   signUp: (values: any, actions: FormikHelpers<any>) => Promise<void>;
   signIn: (values: any, actions: FormikHelpers<any>) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
@@ -16,6 +24,7 @@ export interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
+  authStatus: null,
   isLoading: false,
   error: null,
   signUp: async () => {},
@@ -32,7 +41,26 @@ export const AuthContextProvider = ({
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const [authStatus, setAuthStatus] = useState<string | null>(null);
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch("/api/auth/check", { credentials: "include" });
+        const data = await res.json();
+        if (data.authenticated) {
+          console.log({ data });
+          setAuthStatus("authenticated");
+        } else {
+          setAuthStatus("unauthenticated");
+          setUser(null);
+        }
+      } catch (err) {
+        setAuthStatus("unauthenticated");
+        setUser(null);
+      }
+    };
+    checkAuth();
+  }, []);
   const handleAuthRequest = async (
     url: string,
     values: any,
@@ -88,7 +116,15 @@ export const AuthContextProvider = ({
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, error, signUp, signIn, forgotPassword }}
+      value={{
+        authStatus,
+        user,
+        isLoading,
+        error,
+        signUp,
+        signIn,
+        forgotPassword,
+      }}
     >
       {children}
     </AuthContext.Provider>
