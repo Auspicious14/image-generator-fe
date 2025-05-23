@@ -10,6 +10,7 @@ interface IHomeState {
   history: IHistory[];
   getImages: () => Promise<any>;
   generateImage: (prompt: string) => Promise<any>;
+  setHistory: (history: IHistory[]) => void;
 }
 
 export const HomeContext = createContext<IHomeState | undefined>(undefined);
@@ -72,7 +73,7 @@ export const HomeContextProvider: React.FC<IProps> = ({ children }) => {
   };
   return (
     <HomeContext.Provider
-      value={{ loading, image, history, getImages, generateImage }}
+      value={{ loading, image, history, getImages, generateImage, setHistory }}
     >
       {children}
     </HomeContext.Provider>

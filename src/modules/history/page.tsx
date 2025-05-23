@@ -1,8 +1,6 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useHomeState } from "../home/context";
 import {
   ArrowDownTrayIcon,
@@ -15,9 +13,9 @@ const HistoryPage = () => {
   const [newPrompt, setNewPrompt] = useState("");
   const { getImages, history, loading, generateImage } = useHomeState();
 
-  useEffect(() => {
-    getImages();
-  }, []);
+  // useEffect(() => {
+  //   getImages();
+  // }, []);
 
   const handleGenerate = async () => {
     if (!newPrompt.trim()) return;

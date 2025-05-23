@@ -1,8 +1,15 @@
+import { AxiosClient } from "@/components";
 import HistoryPage from "@/modules/history/page";
+import { useHomeState } from "@/modules/home/context";
 import { GetServerSideProps } from "next";
-import React from "react";
+import React, { useEffect } from "react";
 
-const ChatHistory = async () => {
+const ChatHistory = ({ history }: { history: any }) => {
+  const { setHistory } = useHomeState();
+  useEffect(() => {
+    if (history) setHistory(history);
+  }, [history]);
+
   return <HistoryPage />;
 };
 
@@ -20,5 +27,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
-  return { props: {} };
+
+  const response = await AxiosClient.get("/images", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = response.data?.data;
+  return { props: { history: data } };
 };
