@@ -76,8 +76,10 @@ export const AuthContextProvider = ({
           setCookie("token", response.data?.data?.token, 3);
           setUser(response.data?.data);
           toast.success("Success!");
+          router.push("/chat")
+        } else {
+          router.push("/signup")
         }
-        router.push(type === "signup" ? "/signin" : `/chat`);
       }
     } catch (err: any) {
       setError(err.response?.data?.message || "An error occurred");
