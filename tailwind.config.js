@@ -4,14 +4,27 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      // fontFamily: {
+      //   sans: ["Poppins", "sans-serif"],
+      //   display: ["Poppins", "sans-serif"],
+      // },
+      // colors: {
+      //   primary: {
+      //     DEFAULT: "#6366f1",
+      //     dark: "#4338ca",
+      //   },
+      // },
       fontFamily: {
-        sans: ["Poppins", "sans-serif"],
-        display: ["Poppins", "sans-serif"],
+        heading: ["Poppins", "sans-serif"],
+        body: ["Open Sans", "sans-serif"],
+        cta: ["Montserrat", "sans-serif"],
       },
       colors: {
-        primary: {
-          DEFAULT: "#6366f1",
-          dark: "#4338ca",
+        orange: {
+          500: "#F28C38",
+        },
+        blue: {
+          500: "#4A90E2",
         },
       },
     },
