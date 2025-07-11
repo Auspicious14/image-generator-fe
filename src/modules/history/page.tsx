@@ -57,24 +57,53 @@ const HistoryPage = () => {
                 </div>
               </div>
 
-              <div className="flex justify-start items-center gap-2">
-                <div className="bg-white p-1 rounded-2xl shadow-sm max-w-[200px]">
-                  <Image
-                    src={item.imageUrl}
-                    alt="Generated"
-                    width={200}
-                    height={200}
-                    className="rounded-xl object-cover w-full h-auto"
-                  />
+              {loading ? (
+                <div className="flex justify-start items-center animate-pulse">
+                  <div className="bg-gray-200 p-1 rounded-2xl shadow-sm w-[200px] h-[200px]">
+                    <div className="w-full h-full bg-gray-300 rounded-xl flex items-center justify-center">
+                      <svg
+                        className="w-10 h-10 text-gray-400 animate-spin"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="none"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="w-5 h-5 bg-gray-200 rounded-full animate-pulse" />
                 </div>
-                <button
-                  onClick={() => handleDownload(item.imageUrl)}
-                  className="text-blue-600 hover:text-blue-800"
-                  title="Download image"
-                >
-                  <ArrowDownTrayIcon className="w-5 h-5" />
-                </button>
-              </div>
+              ) : (
+                <div className="flex justify-start items-center gap-2">
+                  <div className="bg-white p-1 rounded-2xl shadow-sm max-w-[200px]">
+                    <Image
+                      src={item.imageUrl}
+                      alt="Generated"
+                      width={200}
+                      height={200}
+                      className="rounded-xl object-cover w-full h-auto"
+                    />
+                  </div>
+                  <button
+                    onClick={() => handleDownload(item.imageUrl)}
+                    className="text-blue-600 hover:text-blue-800"
+                    title="Download image"
+                  >
+                    <ArrowDownTrayIcon className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>

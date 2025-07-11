@@ -37,11 +37,12 @@ export default function ImageToImagePage() {
       <h1 className="text-4xl font-bold mb-8">Image to Image Generation</h1>
       <div className="w-full max-w-md">
         <TextInput
+          ignoreFormik
           label="Prompt"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Enter your prompt here"
-          name={""}
+          name={"prompt"}
         />
         <input
           type="file"

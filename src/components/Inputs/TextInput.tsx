@@ -11,16 +11,20 @@ interface ITextInputProps
   name: string;
   helperText?: string;
   rows?: number;
+  ignoreFormik?: boolean;
 }
 
-export const TextInput: FC<ITextInputProps> = ({
+export const TextInput: FC<ITextInputProps & { ignoreFormik?: boolean }> = ({
   label,
   className,
   helperText,
   type = "text",
+  ignoreFormik = false,
   ...props
 }) => {
-  const [field, meta] = useField(props);
+  const [field, meta] = ignoreFormik
+    ? [props, { touched: false, error: undefined }]
+    : useField(props);
 
   const baseClasses = `
   w-full
@@ -72,7 +76,7 @@ export const TextInput: FC<ITextInputProps> = ({
       <div className="relative">
         {type !== "textarea" ? (
           <input
-            {...field}
+            {...(ignoreFormik ? props : field)}
             {...props}
             type={type}
             className={`block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-primary focus:ring-primary dark:focus:border-primary-400 dark:bg-gray-700 dark:text-gray-200${className}`}
@@ -80,7 +84,7 @@ export const TextInput: FC<ITextInputProps> = ({
           />
         ) : (
           <textarea
-            {...field}
+            {...(ignoreFormik ? props : field)}
             {...props}
             rows={props.rows || 4}
             className={`block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-primary focus:ring-primary dark:focus:border-primary-400 dark:bg-gray-700 dark:text-gray-200 ${className} `}

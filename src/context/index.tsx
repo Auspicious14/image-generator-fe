@@ -2,6 +2,7 @@ import React, { FC, ComponentProps, JSX } from "react";
 import { Toaster } from "react-hot-toast";
 import { AuthContextProvider } from "../modules/auth/context";
 import { HomeContextProvider } from "@/modules/home/context";
+import { ImageToImageProvider } from "@/modules/image-to-image/context";
 
 export const combineContext = (...components: FC[]): FC<any> => {
   const CombinedComponent = components.reduce(
@@ -42,5 +43,9 @@ export const combineContext = (...components: FC[]): FC<any> => {
   return CombinedComponent;
 };
 
-const providers = [HomeContextProvider, AuthContextProvider] as any;
+const providers = [
+  HomeContextProvider,
+  AuthContextProvider,
+  ImageToImageProvider,
+] as any;
 export const AppContextProvider = combineContext(...providers);
