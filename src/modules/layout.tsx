@@ -17,6 +17,14 @@ export default function RootLayout({
           className="mx-auto mb-6 w-40 my-4 dark:invert"
         />
       </Link>
+      <nav className="flex justify-center space-x-4 mb-8">
+        <Link href="/" className="text-blue-600 hover:underline">
+          Text to Image
+        </Link>
+        <Link href="/image-to-image" className="text-blue-600 hover:underline">
+          Image to Image
+        </Link>
+      </nav>
       {children}
     </div>
   );
