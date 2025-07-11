@@ -1,12 +1,12 @@
 import { GetServerSideProps } from "next";
-import { HomeContext } from "@/modules/home/context";
+import { HomeContextProvider } from "@/modules/home/context";
 import { HomePage } from "@/modules/home/page";
 import { AxiosClient } from "@/components/Api";
 import Link from "next/link";
 
 export default function Home({ history }: { history: any }) {
   return (
-    <HomeProvider history={history}>
+    <HomeContextProvider>
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <h1 className="text-4xl font-bold mb-8">Welcome to Image Generator!</h1>
         <p className="text-lg text-center mb-8">
@@ -42,7 +42,7 @@ export default function Home({ history }: { history: any }) {
           <HomePage />
         </div>
       </div>
-    </HomeProvider>
+    </HomeContextProvider>
   );
 }
 
