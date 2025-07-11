@@ -78,7 +78,8 @@ export const AuthContextProvider = ({
           toast.success("Success!");
           router.push("/chat")
         } else {
-          router.push("/signup")
+          toast.success("Success!");
+          router.push("/signin")
         }
       }
     } catch (err: any) {
