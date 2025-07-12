@@ -165,7 +165,7 @@ export const HomePage = () => {
             Transform your photos into Studio Ghibli masterpieces or generate
             unique images from text.
           </p>
-          <Link href="/generate">
+          <Link href="/features">
             <motion.button
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
