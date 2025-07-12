@@ -2,45 +2,44 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { ArrowDownTrayIcon, PhotoIcon } from '@heroicons/react/24/outline'
-import { useImageToImage } from "../image-to-image/context";
+import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import { useImageToImage } from '../image-to-image/context'
 
 export const ArtTransformPage = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [outputUrl, setOutputUrl] = useState<string | null>(null)
-const { generateImage, loading, image } = useImageToImage();
+  const [prompt, setPrompt] = useState('')
+  const { generateImage, loading, image } = useImageToImage()
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setSelectedImage(file)
-      setOutputUrl(null)
       setPreviewUrl(URL.createObjectURL(file))
     }
   }
 
   const handleGenerate = async () => {
-    if (!prompt.trim() || !image) return;
+    if (!selectedImage) return
 
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onloadend = async () => {
-      const base64data = reader.result as string;
+      const base64data = reader.result as string
       await generateImage(prompt, {
         uri: base64data,
         name: selectedImage.name,
         type: selectedImage.type,
-      });
-      setPrompt("");
-      setSelectedImage(null);
-    };
-    reader.readAsDataURL(selectedImage);
-  };
-  
+      })
+      setPrompt('')
+    }
+
+    reader.readAsDataURL(selectedImage)
+  }
+
   const handleDownload = () => {
-    if (!outputUrl) return
+    if (!image?.imageUrl) return
     const link = document.createElement('a')
-    link.href = outputUrl
+    link.href = image.imageUrl
     link.download = 'ghibli-transformed-image.png'
     document.body.appendChild(link)
     link.click()
@@ -54,21 +53,35 @@ const { generateImage, loading, image } = useImageToImage();
           Studio Ghibli Transformation
         </h1>
         <p className="text-gray-600 mb-8">
-          Upload a photo and transform it into a Ghibli-style masterpiece.
+          Upload a photo and (optionally) describe the mood or style you'd like.
         </p>
 
-        {/* Upload */}
+        {/* Upload Section */}
         <div className="bg-white rounded-xl shadow p-6 mb-10">
-          <label className="block mb-4 text-sm font-medium text-gray-700">Upload your image</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="mb-6"
-          />
+          <div className="mb-6 text-left">
+            <label className="block mb-1 text-sm font-medium text-gray-700">Upload your image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="block"
+            />
+          </div>
+
+          <div className="mb-6 text-left">
+            <label className="block mb-1 text-sm font-medium text-gray-700">Prompt (optional)</label>
+            <input
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="e.g., a misty forest with glowing spirits"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
+
           {previewUrl && (
             <div className="mb-6">
-              <p className="text-gray-500 text-sm mb-2">Preview:</p>
+              <p className="text-gray-500 text-sm mb-2 text-left">Preview:</p>
               <Image
                 src={previewUrl}
                 alt="Preview"
@@ -78,16 +91,17 @@ const { generateImage, loading, image } = useImageToImage();
               />
             </div>
           )}
+
           <button
-            onClick={handleTransform}
-            disabled={!image || loading}
+            onClick={handleGenerate}
+            disabled={!selectedImage || loading}
             className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Transforming...' : 'Transform to Ghibli Style'}
           </button>
         </div>
 
-        {/* Output */}
+        {/* Output Section */}
         {loading && (
           <div className="animate-pulse bg-white p-6 rounded-xl shadow text-center">
             <div className="w-full h-64 bg-gray-200 rounded-xl mb-4" />
@@ -95,11 +109,11 @@ const { generateImage, loading, image } = useImageToImage();
           </div>
         )}
 
-        {!loading && outputUrl && (
+        {!loading && image?.imageUrl && (
           <div className="bg-white p-6 rounded-xl shadow text-center">
             <p className="text-sm text-gray-600 mb-4">Your Ghibli-style result:</p>
             <Image
-              src={outputUrl}
+              src={image.imageUrl}
               alt="Ghibli Result"
               width={400}
               height={300}
