@@ -1,7 +1,5 @@
-
 import { GetServerSideProps } from "next";
-import { ArtTransformPage} from "@/modules/studio/page";
-import { AxiosClient } from "@/components/Api";
+import { ArtTransformPage } from "@/modules/studio/page";
 
 export default function ArtTransform() {
   return <ArtTransformPage />;
@@ -19,3 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+  return {
+    props: {},
+  };
+};

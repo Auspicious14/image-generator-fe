@@ -1,50 +1,53 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import Image from 'next/image'
-import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import { useImageToImage } from '../image-to-image/context'
+import React, { useState } from "react";
+import Image from "next/image";
+import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { useImageToImage } from "./context";
 
 export const ArtTransformPage = () => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [prompt, setPrompt] = useState('')
-  const { generateImage, loading, image } = useImageToImage()
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [prompt, setPrompt] = useState("");
+  const { generateImage, loading, image } = useImageToImage();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setSelectedImage(file)
-      setPreviewUrl(URL.createObjectURL(file))
+      setSelectedImage(file);
+      setPreviewUrl(URL.createObjectURL(file));
     }
-  }
+  };
 
   const handleGenerate = async () => {
-    if (!selectedImage) return
+    if (!selectedImage) return;
 
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onloadend = async () => {
-      const base64data = reader.result as string
-      await generateImage(prompt, {
-        uri: base64data,
-        name: selectedImage.name,
-        type: selectedImage.type,
-      })
-      setPrompt('')
-    }
+      const base64data = reader.result as string;
+      await generateImage(
+        {
+          uri: base64data,
+          name: selectedImage.name,
+          type: selectedImage.type,
+        },
+        prompt
+      );
+      setPrompt("");
+    };
 
-    reader.readAsDataURL(selectedImage)
-  }
+    reader.readAsDataURL(selectedImage);
+  };
 
   const handleDownload = () => {
-    if (!image?.imageUrl) return
-    const link = document.createElement('a')
-    link.href = image.imageUrl
-    link.download = 'ghibli-transformed-image.png'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
+    if (!image?.imageUrl) return;
+    const link = document.createElement("a");
+    link.href = image.imageUrl;
+    link.download = "ghibli-transformed-image.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 pt-24 px-4 pb-16">
@@ -59,7 +62,9 @@ export const ArtTransformPage = () => {
         {/* Upload Section */}
         <div className="bg-white rounded-xl shadow p-6 mb-10">
           <div className="mb-6 text-left">
-            <label className="block mb-1 text-sm font-medium text-gray-700">Upload your image</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Upload your image
+            </label>
             <input
               type="file"
               accept="image/*"
@@ -69,7 +74,9 @@ export const ArtTransformPage = () => {
           </div>
 
           <div className="mb-6 text-left">
-            <label className="block mb-1 text-sm font-medium text-gray-700">Prompt (optional)</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Prompt (optional)
+            </label>
             <input
               type="text"
               value={prompt}
@@ -97,11 +104,10 @@ export const ArtTransformPage = () => {
             disabled={!selectedImage || loading}
             className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Transforming...' : 'Transform to Ghibli Style'}
+            {loading ? "Transforming..." : "Transform to Ghibli Style"}
           </button>
         </div>
 
-        {/* Output Section */}
         {loading && (
           <div className="animate-pulse bg-white p-6 rounded-xl shadow text-center">
             <div className="w-full h-64 bg-gray-200 rounded-xl mb-4" />
@@ -111,9 +117,11 @@ export const ArtTransformPage = () => {
 
         {!loading && image?.imageUrl && (
           <div className="bg-white p-6 rounded-xl shadow text-center">
-            <p className="text-sm text-gray-600 mb-4">Your Ghibli-style result:</p>
+            <p className="text-sm text-gray-600 mb-4">
+              Your Ghibli-style result:
+            </p>
             <Image
-              src={image.imageUrl}
+              src={image.transformedImageUrl}
               alt="Ghibli Result"
               width={400}
               height={300}
@@ -130,5 +138,5 @@ export const ArtTransformPage = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
