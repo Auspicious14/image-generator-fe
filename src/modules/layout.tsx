@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import { Poppins, Open_Sans, Montserrat } from "next/font/google";
+import { useState } from "react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "framer-motion";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,6 +29,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
     <div
       className={`${poppins.variable} ${openSans.variable} ${montserrat.variable}`}
@@ -38,7 +45,7 @@ export default function RootLayout({
               height={70}
             />
           </Link>
-          <nav className="space-x-6 hidden md:flex">
+          <nav className="hidden md:flex space-x-6 text-sm font-medium">
             <Link href="/" className="hover:text-orange-500">
               Home
             </Link>
@@ -52,7 +59,71 @@ export default function RootLayout({
               Login
             </Link>
           </nav>
+          {isOpen ? (
+            <XMarkIcon className="w-6 h-6" onClick={() => setIsOpen(!isOpen)} />
+          ) : (
+            <Bars3Icon className="w-6 h-6" onClick={() => setIsOpen(!isOpen)} />
+          )}
         </div>
+
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsOpen(false)}
+              />
+              <motion.nav
+                className="fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg px-6 py-8 space-y-6"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "tween", duration: 0.3 }}
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold text-blue-400">Menu</h2>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="text-orange-500"
+                  >
+                    <XMarkIcon
+                      className="w-6 h-6"
+                      onClick={() => setIsOpen(!isOpen)}
+                    />
+                  </button>
+                </div>
+
+                <Link
+                  href="/"
+                  className="block text-gray-700 hover:text-orange-500"
+                >
+                  Home
+                </Link>
+                <Link
+                  href="/features"
+                  className="block text-gray-700 hover:text-orange-500"
+                >
+                  Features
+                </Link>
+                <Link
+                  href="/gallery"
+                  className="block text-gray-700 hover:text-orange-500"
+                >
+                  Gallery
+                </Link>
+                <Link
+                  href="/login"
+                  className="block text-gray-700 hover:text-orange-500"
+                >
+                  Login
+                </Link>
+              </motion.nav>
+            </>
+          )}
+        </AnimatePresence>
       </header>
       {children}
 

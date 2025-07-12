@@ -135,6 +135,7 @@
 
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -151,7 +152,12 @@ export const HomePage = () => {
           priority
           className="z-0 w-full brightness-75"
         />
-        <div className="relative z-10 max-w-3xl text-white">
+        <motion.div
+          className="absolute inset-0 bg-black/40 z-10 flex flex-col justify-center items-center text-center text-white px-4"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold">
             Create Stunning Art with AI
           </h2>
@@ -160,15 +166,27 @@ export const HomePage = () => {
             unique images from text.
           </p>
           <Link href="/generate">
-            <button className="mt-6 bg-orange-500 hover:scale-105 transition-transform text-white font-bold text-lg px-6 py-3 rounded-full">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="mt-6 bg-orange-500 text-white px-8 py-4 text-lg rounded-full font-bold"
+            >
               Try Now for Free
-            </button>
+            </motion.button>
           </Link>
-        </div>
+        </motion.div>
       </section>
-
       {/* Benefits */}
-      <section className="py-16 px-4 bg-white">
+      <motion.section
+        className="py-16 bg-white text-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.2 } },
+        }}
+      >
         <h3 className="text-3xl font-bold text-center text-gray-800">
           Why Choose Inkly AI?
         </h3>
@@ -202,10 +220,15 @@ export const HomePage = () => {
             </div>
           ))}
         </div>
-      </section>
-
+      </motion.section>
       {/* Testimonials */}
-      <section className="py-16 px-4 bg-gray-50">
+      <motion.section
+        className="bg-gray-50 py-16"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
         <h3 className="text-2xl font-bold text-center text-gray-800">
           Loved by Creators
         </h3>
@@ -245,7 +268,7 @@ export const HomePage = () => {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>{" "}
     </main>
   );
 };
