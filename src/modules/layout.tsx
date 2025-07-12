@@ -7,6 +7,8 @@ import { Poppins, Open_Sans, Montserrat } from "next/font/google";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion } from "framer-motion";
+import { FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -36,7 +38,7 @@ export default function RootLayout({
       className={`${poppins.variable} ${openSans.variable} ${montserrat.variable}`}
     >
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 md:py-4 flex justify-between items-center">
           <Link href="/">
             <Image
               src="/inkly-logo-black.png"
@@ -55,7 +57,7 @@ export default function RootLayout({
             <Link href="/gallery" className="hover:text-orange-500">
               Gallery
             </Link>
-            <Link href="/login" className="hover:text-orange-500">
+            <Link href="/signin" className="hover:text-orange-500">
               Login
             </Link>
           </nav>
@@ -115,7 +117,7 @@ export default function RootLayout({
                   Gallery
                 </Link>
                 <Link
-                  href="/login"
+                  href="/signin"
                   className="block text-gray-700 hover:text-orange-500"
                 >
                   Login
@@ -159,22 +161,26 @@ export default function RootLayout({
               </button>
             </form>
           </div>
+
           <div className="flex items-center justify-center space-x-4">
             <a
-              href="https://twitter.com"
-              className="text-orange-500 hover:text-orange-600"
+              href="https://x.com/@_auspy_"
+              className="text-blue-500 hover:text-blue-600"
               target="_blank"
             >
-              <i className="fab fa-twitter text-xl"></i>
+              <FaX />
             </a>
             <a
               href="https://instagram.com"
-              className="text-orange-500 hover:text-orange-600"
+              className="text-blue-500 hover:text-blue-600"
               target="_blank"
             >
-              <i className="fab fa-instagram text-xl"></i>
+              <FaInstagram className="w-6 h-6" />
             </a>
           </div>
+          <p className="text-center text-blue-500 hover:text-blue-600">
+            Made with ❤️ by Auspicious
+          </p>
         </div>
       </footer>
     </div>
