@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { ArrowDownTrayIcon, PhotoIcon } from '@heroicons/react/24/outline'
 import { useImageToImage } from "../image-to-image/context";
 
-export const ArtTransformPage() {
+export const ArtTransformPage = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [outputUrl, setOutputUrl] = useState<string | null>(null)
