@@ -1,5 +1,5 @@
 import { AxiosClient } from "@/components";
-import HistoryPage from "@/modules/history/page";
+import TextToImagePage from "@/modules/history/page";
 import { useHomeState } from "@/modules/home/context";
 import { GetServerSideProps } from "next";
 import React, { useEffect } from "react";
@@ -10,7 +10,7 @@ const ChatHistory = ({ history }: { history: any }) => {
     if (history) setHistory(history);
   }, [history]);
 
-  return <HistoryPage />;
+  return <TextToImagePage />;
 };
 
 export default ChatHistory;
