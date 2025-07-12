@@ -9,16 +9,19 @@ export const FeaturesPage = () => {
       title: "Generate from Prompts",
       desc: "Type a description and let AI create unique art.",
       icon: "📝",
+      link: "/chat"
     },
     {
       title: "Studio Ghibli Style",
       desc: "Transform photos into Ghibli-inspired scenes.",
       icon: "🎥",
+      link: "/studio"
     },
     {
       title: "Your Gallery",
       desc: "Save and view all your creations in one place.",
       icon: "🖼",
+      link: "/gallery"
     },
   ];
 
